@@ -29,9 +29,9 @@ php artisan serve
 You can run tests via `php artisan test`. It is recommended to have a test driven approach to your development.
 
 ## TODO 
-- [] make a csv class to read the csv and make it into a collection.
-- [] create a Pokemon model, and the appropriate database migration
-- [] create an import command from the csv to the pokemons table
-- [] create an autentication method for the API (use passport)
+- [ ] make a csv class to read the csv and make it into a collection.
+- [ ] create a Pokemon model, and the appropriate database migration
+- [ ] create an import command from the csv to the pokemons table
+- [ ] create an autentication method for the API (use passport)
     - note : add a updated_by to the Pokemon class for more security
-- [] create the PokemonController, with postman documentation
+- [ ] create the PokemonController, with postman documentation
