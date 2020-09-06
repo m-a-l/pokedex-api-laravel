@@ -7,7 +7,7 @@ The database is populated via a csv.
 Requires : 
 - PHP >= 7.2
 - [composer](https://getcomposer.org/download/)
-- MySQl or equivalent
+- MySQL or equivalent
 ```bash
 # set up your .env
 cp .env.example .env
