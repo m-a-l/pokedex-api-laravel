@@ -9,6 +9,7 @@ use App\Pokemon;
 class PokemonTest extends TestCase
 {
     /**
+     * pokemons table exists
      * @test
      * @return void
      */
@@ -18,6 +19,7 @@ class PokemonTest extends TestCase
     }
 
     /**
+     * pokemons table has expected columns
      * @test
      * @return void
      */
@@ -44,6 +46,7 @@ class PokemonTest extends TestCase
     }
 
     /**
+     * pokemon fields are mass assignable
      * @test
      * @return void
      */

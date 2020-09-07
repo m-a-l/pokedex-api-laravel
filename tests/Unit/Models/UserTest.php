@@ -8,6 +8,7 @@ use Tests\TestCase;
 class UserTest extends TestCase
 {
     /**
+     * users table exists
      * @test
      * @return void
      */
@@ -16,7 +17,10 @@ class UserTest extends TestCase
         $this->assertTrue(Schema::hasTable('users'));
     }
 
-    /** @test  */
+    /**
+    * users database has expected columns
+    * @return void
+    */
     public function usersDatabaseHasExpectedColumns()
     {
         $this->assertTrue(Schema::hasColumns('users', [

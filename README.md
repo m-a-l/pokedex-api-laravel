@@ -30,11 +30,12 @@ You can run tests via `php artisan test`. It is recommended to have a test drive
 
 ## TODO 
 ### Must have
-- [ x ] make a csv class to read the csv and make it into a collection.
-- [ x ] create a Pokemon model, and the appropriate database migration
-- [ ] create an import command from the csv to the pokemons table
+- [x] make a csv class to read the csv and make it into a collection.
+- [x] create a Pokemon model, and the appropriate database migration
+- [x] create an import command from the csv to the pokemons table
 - [ ] create the PokemonController, with postman documentation
 ### Should have
+- [ ] Heroku implementation
 - [ ] Commands, import : Bulk import instead of save in foreach
 - [ ] create an autentication method for the API (use passport)
     - note : add a updated_by to the Pokemon class for more security
@@ -43,5 +44,6 @@ You can run tests via `php artisan test`. It is recommended to have a test drive
 ### Nice to have
 - [ ] Commands, import : make a separate command (or add option) that updates or create, and does not drop table pokemons
 - [ ] Commands, import : allow to use another csv than /storage/app/csv/pokemon.csv
+- [ ] Commands, import : make nice little user output
 - [ ] Services, csv : make App\Services\CsvService take a path instead of writing and reading only in /storage/app/csv
 - [ ] Models : change pokemon model to secure the content of the types

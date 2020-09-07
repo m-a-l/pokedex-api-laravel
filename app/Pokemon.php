@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pokemon extends Model
 {
+    /**
+    * The corresponding table name in database
+    * @var string
+    */
     protected $table = 'pokemons';
 
     /**

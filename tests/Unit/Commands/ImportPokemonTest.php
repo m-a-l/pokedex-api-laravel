@@ -14,6 +14,7 @@ use Schema;
 class ImportPokemonTest extends TestCase
 {
     /**
+     * asks confirmation to execute
      * @test
      * @return void
      */
@@ -24,19 +25,19 @@ class ImportPokemonTest extends TestCase
             ->assertExitCode(1);
     }
     /**
+     * throws error if csv does not exist
      * @test
      * @return void
      */
     public function throwsErrorIfCsvDoesNotExist()
     {
-        if (!file_exists(storage_path() . '/app/csv/pokemon.csv')) {
-            $this->expectException(FileNotFoundException::class);
-        }
-        $this->artisan('pokemons:import')
+        $this->expectException(FileNotFoundException::class);
+        $this->artisan('pokemons:import yolololo')
             ->expectsQuestion('/!\ WILL DELETE ALL POKEMON DATA /!\ Do you really wish to run this command?', 'yes');
     }
 
     /**
+     * throws error if csv does not exist
      * @test
      * @return void
      */
@@ -53,6 +54,7 @@ class ImportPokemonTest extends TestCase
     }
 
     /**
+     * throws error if csv headers do not match headers to attributes
      * @test
      * @return void
      */
@@ -84,6 +86,7 @@ class ImportPokemonTest extends TestCase
     }
 
     /**
+     * convert to pokemon returns pokemon collection
      * @test
      * @return void
      */
@@ -118,6 +121,7 @@ class ImportPokemonTest extends TestCase
     }
 
     /**
+    * convert to pokemon returns appropriate types
     * @test
     * @return void
     */
