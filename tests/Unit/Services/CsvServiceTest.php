@@ -70,7 +70,7 @@ class CsvServiceTest extends TestCase
     }
 
     /**
-     * throw error at creation if $headers is empty or does not contain strings
+     * throw error at creation if $headers is empty
      * @test
      * @return void
      */
@@ -87,4 +87,26 @@ class CsvServiceTest extends TestCase
         $csvService->create('csv-test.csv', [], $users);
         unlink(storage_path() . '/app/csv/csv-test.csv');
     }
+
+    /**
+     *
+     * @test
+     * @return void
+     */
+    public function readFunctionReturnsAnAssociativeArrayWithGoodValues()
+    {
+        $csvService = new CsvService();
+        $users = [
+            [
+                'name' => 'Billy',
+                'role' => 'admin'
+            ]
+        ];
+        $csvService->create('csv-test', ['name', 'role'], $users);
+        $values = $csvService->read('csv-test');
+        $this->assertEquals($values, $users); // must return the exact input of create's last argument
+        unlink(storage_path() . '/app/csv/csv-test.csv');
+    }
+    
+    // @TODO test if errors is thrown on file not found
 }

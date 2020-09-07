@@ -62,4 +62,30 @@ class CsvService
             fputcsv($file, $row);
         }
     }
+
+    /**
+    * Reads a csv.
+    * Returns an array of arrays containing field => value, exact same as create's' argument $content
+    * @param $fileName, the filename without extension. Will read /storage/app/csv/filename.csv
+    *
+    * @return array
+    */
+    public function read(string $fileName)
+    {
+        $file = storage_path() . "/app/csv/$fileName.csv";
+        $header = null;
+        $csv = [];
+        if (($handle = fopen($file, 'r')) !== false) {
+            while (($row = fgetcsv($handle, 100000, ",")) !== false) {
+                if (!$header) {
+                    $header = $row;
+                } else {
+                    $csv[] = array_combine($header, $row);
+                }
+            }
+            fclose($handle);
+        }
+
+        return $csv;
+    }
 }
