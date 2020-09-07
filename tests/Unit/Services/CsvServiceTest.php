@@ -9,11 +9,11 @@ use InvalidArgumentException;
 class CsvServiceTest extends TestCase
 {
     /**
-     * csv is created on disk with good content
+     * create creates csv on disk with good content
      * @test
      * @return void
      */
-    public function csvIsCreatedOnDiskWithGoodContent()
+    public function createCreatesCsvOnDiskWithGoodContent()
     {
         $csvService = new CsvService();
         $users = [
@@ -34,11 +34,11 @@ class CsvServiceTest extends TestCase
     }
     
     /**
-     * ignore extension in name if passed to create function
+     * create ignores extension in name if passed
      * @test
      * @return void
      */
-    public function ignoreExtensionInNameIfPassedToCreateFunction()
+    public function createIgnoresExtensionInNameIfPassed()
     {
         $csvService = new CsvService();
         $users = [
@@ -53,11 +53,11 @@ class CsvServiceTest extends TestCase
     }
 
     /**
-     * throw error at creation if $content first element is not array of array
+     * create throws error if content first element is not array of array
      * @test
      * @return void
      */
-    public function throwErrorAtCreationIfContentFirstElementIsNotArrayOfArray()
+    public function createThrowsErrorIfContentFirstElementIsNotArrayOfArray()
     {
         $this->expectException(InvalidArgumentException::class);
         $csvService = new CsvService();
@@ -70,11 +70,11 @@ class CsvServiceTest extends TestCase
     }
 
     /**
-     * throw error at creation if $headers is empty
+     * create throws error if headers is empty
      * @test
      * @return void
      */
-    public function throwErrorAtCreationIfHeadersIsEmpty()
+    public function createThrowsErrorIfHeadersIsEmpty()
     {
         $this->expectException(InvalidArgumentException::class);
         $csvService = new CsvService();
@@ -89,11 +89,11 @@ class CsvServiceTest extends TestCase
     }
 
     /**
-     *
+     * read returns an associative array with good values
      * @test
      * @return void
      */
-    public function readFunctionReturnsAnAssociativeArrayWithGoodValues()
+    public function readReturnsAnAssociativeArrayWithGoodValues()
     {
         $csvService = new CsvService();
         $users = [
@@ -113,7 +113,7 @@ class CsvServiceTest extends TestCase
      * @test
      * @return void
      */
-    public function readThrowsErrorIfFileIdNotFound()
+    public function readThrowsErrorIfFileIsNotFound()
     {
         $this->expectException(InvalidArgumentException::class);
         $csvService = new CsvService();
