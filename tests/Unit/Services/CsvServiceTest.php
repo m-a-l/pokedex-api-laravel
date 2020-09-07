@@ -19,17 +19,18 @@ class CsvServiceTest extends TestCase
         $users = [
             [
                 'name' => 'Billy',
-                'role' => 'admin'
+                'role' => 'admin',
+                'admin' => true
             ],
             [
                 'role' => 'user',
                 'name' => 'Gérad',
-                'favorite-ice-cream' => 'vanilla'
+                'admin' => false
             ]
         ];
-        $csvService->create('csv-test', ['name', 'role'], $users);
+        $csvService->create('csv-test', ['name', 'role', 'admin'], $users);
         $this->assertFileExists(storage_path() . '/app/csv/csv-test.csv');
-        $this->assertEquals(file_get_contents(storage_path() . '/app/csv/csv-test.csv'), "name,role\nBilly,admin\nGérad,user\n");
+        $this->assertEquals(file_get_contents(storage_path() . '/app/csv/csv-test.csv'), "name,role,admin\nBilly,admin,true\nGérad,user,false\n");
         unlink(storage_path() . '/app/csv/csv-test.csv');
     }
     
@@ -89,6 +90,32 @@ class CsvServiceTest extends TestCase
     }
 
     /**
+     *
+     * @test
+     * @return void
+     */
+    public function createThrowsErrorIfFieldIsNotFoundInHeaders()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $csvService = new CsvService();
+        $users = [
+            [
+                'name' => 'Billy',
+                'role' => 'admin',
+                'admin' => true
+            ],
+            [
+                'role' => 'user',
+                'name' => 'Gérad',
+                'favorite-ice-cream' => 'vanilla',
+                'admin' => false
+            ]
+        ];
+        $csvService->create('csv-test', ['name', 'role', 'admin'], $users);
+        unlink(storage_path() . '/app/csv/csv-test.csv');
+    }
+
+    /**
      * read returns an associative array with good values
      * @test
      * @return void
@@ -117,14 +144,27 @@ class CsvServiceTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $csvService = new CsvService();
+        $values = $csvService->read('csv-test-lalalalaXNSUEN');
+    }
+
+    /**
+     *
+     * @test
+     * @return void
+     */
+    public function getHeadersSendsHeadersBack()
+    {
+        $csvService = new CsvService();
         $users = [
             [
                 'name' => 'Billy',
                 'role' => 'admin'
             ]
         ];
-        $csvService->create('csv-test-coucou.csv', ['name', 'role'], $users);
-        $values = $csvService->read('csv-test');
-        unlink(storage_path() . '/app/csv/csv-test-coucou.csv');
+        $csvService->create('csv-test', ['name', 'role'], $users);
+        $headers = $csvService->getHeaders('csv-test');
+        unlink(storage_path() . '/app/csv/csv-test.csv');
+
+        $this->assertEquals($headers, ['name', 'role']);
     }
 }

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pokemon extends Model
 {
+    protected $table = 'pokemons';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -25,5 +27,23 @@ class Pokemon extends Model
         'speed_points',
         'generation',
         'legendary'
+    ];
+
+     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'number' => 'integer',
+        'total_points' => 'integer',
+        'health_points' => 'integer',
+        'attack_points' => 'integer',
+        'defense_points' => 'integer',
+        'special_attack_points' => 'integer',
+        'special_defense_points' => 'integer',
+        'speed_points' => 'integer',
+        'generation' => 'integer',
+        'legendary' => 'boolean'
     ];
 }

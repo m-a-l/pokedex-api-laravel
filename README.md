@@ -33,12 +33,15 @@ You can run tests via `php artisan test`. It is recommended to have a test drive
 - [ x ] make a csv class to read the csv and make it into a collection.
 - [ x ] create a Pokemon model, and the appropriate database migration
 - [ ] create an import command from the csv to the pokemons table
-- [ ] create an autentication method for the API (use passport)
-    - note : add a updated_by to the Pokemon class for more security
 - [ ] create the PokemonController, with postman documentation
 ### Should have
+- [ ] Commands, import : Bulk import instead of save in foreach
+- [ ] create an autentication method for the API (use passport)
+    - note : add a updated_by to the Pokemon class for more security
 - [ ] remove register endpoint for even more security
 - [ ] tidy code : put models in a Models/ directory
 ### Nice to have
-- [ ] make App\Services\CsvService take a path instead of writing and reading only in /storage/app/csv
-- [ ] change pokemon model to secure the content of the types
+- [ ] Commands, import : make a separate command (or add option) that updates or create, and does not drop table pokemons
+- [ ] Commands, import : allow to use another csv than /storage/app/csv/pokemon.csv
+- [ ] Services, csv : make App\Services\CsvService take a path instead of writing and reading only in /storage/app/csv
+- [ ] Models : change pokemon model to secure the content of the types

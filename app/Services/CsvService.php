@@ -51,10 +51,21 @@ class CsvService
             foreach ($model as $field => $value) {
                 $index = array_search($field, $headers);
                 if ($index !== false) {
+                    if (is_bool($value)) {
+                        $value = ($value == false ? 'false' : 'true');
+                    }
                     $row[$index] = $value;
+                } else {
+                    throw new InvalidArgumentException(
+                        "Key $field not found in headers"
+                    );
                 }
             }
-            sort($row);
+            $rowBackUp = $row;
+            ksort($row);
+            if ($row == false) {
+                $row = $rowBackUp;
+            }
             $csvInsert[] = $row;
         }
         $file = fopen(storage_path() . "/app/$path", 'w');
@@ -72,12 +83,7 @@ class CsvService
     */
     public function read(string $fileName)
     {
-        $file = storage_path() . "/app/csv/$fileName.csv";
-        if (!file_exists($file) || !is_readable($file)) {
-            throw new InvalidArgumentException(
-                "The file storage/app/csv/$fileName.csv does not exists"
-            );
-        }
+        $file = $this->getFile($fileName);
         $header = null;
         $csv = [];
         if (($handle = fopen($file, 'r')) !== false) {
@@ -92,5 +98,36 @@ class CsvService
         }
 
         return $csv;
+    }
+
+    /**
+    * Get headers from a csv file
+    * @param $fileName, the filename without extension. Will read /storage/app/csv/filename.csv
+    * @return array
+    */
+    public function getHeaders(string $fileName)
+    {
+        $file = $this->getFile($fileName);
+        if (($handle = fopen($file, 'r')) !== false) {
+            $headers = fgetcsv($handle, 100000, ",");
+            fclose($handle);
+        }
+        return $headers;
+    }
+
+    /**
+    * Checks if file exists and returns full path
+    * @param $fileName, the filename without extension. Will read /storage/app/csv/filename.csv
+    */
+    private function getFile(string $fileName)
+    {
+        $file = storage_path() . "/app/csv/$fileName.csv";
+        if (!file_exists($file) || !is_readable($file)) {
+            throw new InvalidArgumentException(
+                "The file storage/app/csv/$fileName.csv does not exists"
+            );
+        }
+
+        return $file;
     }
 }
