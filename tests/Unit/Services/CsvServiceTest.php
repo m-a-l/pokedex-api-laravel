@@ -107,6 +107,24 @@ class CsvServiceTest extends TestCase
         $this->assertEquals($values, $users); // must return the exact input of create's last argument
         unlink(storage_path() . '/app/csv/csv-test.csv');
     }
-    
-    // @TODO test if errors is thrown on file not found
+
+    /**
+     * read throws error if file is not found
+     * @test
+     * @return void
+     */
+    public function readThrowsErrorIfFileIdNotFound()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $csvService = new CsvService();
+        $users = [
+            [
+                'name' => 'Billy',
+                'role' => 'admin'
+            ]
+        ];
+        $csvService->create('csv-test-coucou.csv', ['name', 'role'], $users);
+        $values = $csvService->read('csv-test');
+        unlink(storage_path() . '/app/csv/csv-test-coucou.csv');
+    }
 }

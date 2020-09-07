@@ -73,6 +73,11 @@ class CsvService
     public function read(string $fileName)
     {
         $file = storage_path() . "/app/csv/$fileName.csv";
+        if (!file_exists($file) || !is_readable($file)) {
+            throw new InvalidArgumentException(
+                "The file storage/app/csv/$fileName.csv does not exists"
+            );
+        }
         $header = null;
         $csv = [];
         if (($handle = fopen($file, 'r')) !== false) {
