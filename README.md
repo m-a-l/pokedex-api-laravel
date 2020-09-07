@@ -35,3 +35,6 @@ You can run tests via `php artisan test`. It is recommended to have a test drive
 - [ ] create an autentication method for the API (use passport)
     - note : add a updated_by to the Pokemon class for more security
 - [ ] create the PokemonController, with postman documentation
+
+### Nice to have
+- [ ] make App\Services\CsvService take a path instead of writing and reading only in /storage/app/csv
