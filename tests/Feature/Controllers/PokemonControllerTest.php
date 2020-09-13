@@ -340,6 +340,4 @@ class PokemonControllerTest extends TestCase
         $pokemon->name = 'Bulbasaur';
         $pokemon->save();
     }
-
-    // # same for update (200)
 }
