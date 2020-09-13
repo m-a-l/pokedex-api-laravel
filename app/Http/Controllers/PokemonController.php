@@ -41,7 +41,9 @@ class PokemonController extends Controller
             return response()
                 ->json($errors, 400);
         }
-        $pokemon = Pokemon::create($request->all());
+        $pokemon = $request->all();
+        $pokemon['name'] = trim(strip_tags($pokemon['name']));
+        $pokemon = Pokemon::create($pokemon);
 
         return response()
             ->json(['id' => $pokemon->id], 201);
@@ -54,5 +56,54 @@ class PokemonController extends Controller
             return response('Pokemon does not exist', 400);
         }
         $pokemon->delete();
+    }
+
+    public function read($id)
+    {
+        $pokemon = Pokemon::find($id);
+        if ($pokemon === null) {
+            return response('Pokemon does not exist', 400);
+        }
+
+        return response()
+            ->json($pokemon, 200);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $pokemon = Pokemon::find($id);
+        if ($pokemon === null) {
+            return response('Pokemon does not exist', 400);
+        }
+        $types = implode(',', config('pokemon.types'));
+        $validator = Validator::make($request->all(), [
+            'name' => 'unique:pokemons|max:255',
+            'number' => 'integer',
+            'type_1' => "max:255|in:$types",
+            'type_2' => "max:255|in:$types",
+            'total_points' => 'integer',
+            'health_points' => 'integer',
+            'attack_points' => 'integer',
+            'defense_points' => 'integer',
+            'special_attack_points' => 'integer',
+            'special_defense_points' => 'integer',
+            'speed_points' => 'integer',
+            'generation' => 'integer',
+            'legendary' => 'boolean',
+        ], $this->validationMessages);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+
+            return response()
+                ->json($errors, 400);
+        }
+
+        foreach ($request->all() as $attribute => $value) {
+            $pokemon->{$attribute} = trim(strip_tags($value));
+        }
+        $pokemon->save();
+
+        return response()
+            ->json($pokemon, 200);
     }
 }

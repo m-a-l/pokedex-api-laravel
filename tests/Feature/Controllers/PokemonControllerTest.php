@@ -205,7 +205,7 @@ class PokemonControllerTest extends TestCase
     {
         $countBefore = Pokemon::count();
         $response = $this->postJson('/api/pokemons/new', [
-            'name' => 'Bulbasaur 2',
+            'name' => '<bold>Bulbasaur 2</bold>',
             'number' => 1,
             'type_1' => 'Grass',
             'type_2' => 'Poison',
@@ -267,5 +267,79 @@ class PokemonControllerTest extends TestCase
             ->assertStatus(200);
         $this->assertEquals($countBefore - 1, Pokemon::count());
     }
+
+    /**
+     * read returns good pokemon
+     * @test
+     * @return void
+     */
+    public function readReturnsGoodPokemon()
+    {
+        $response = $this->get('/api/pokemon/1');
+
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+                'name' => 'Bulbasaur',
+                'number' => 1,
+                'type_1' => 'Grass',
+                'type_2' => 'Poison',
+                'total_points' => 318,
+                'health_points' => 45,
+                'attack_points' => 49,
+                'defense_points' => 49,
+                'special_attack_points' => 65,
+                'special_defense_points' => 65,
+                'speed_points' => 45,
+                'generation' => 1,
+                'legendary' => false
+            ]);
+    }
+
+    /**
+     * read throws errors if pokemon not found
+     * @test
+     * @return void
+     */
+    public function readThrowsErrorsIfPokemonNotFound()
+    {
+        $response = $this->get('/api/pokemon/2378493845384509');
+        $response
+            ->assertStatus(400);
+    }
+
+    /**
+     * update throws error if pokemon not found
+     * @test
+     * @return void
+     */
+    public function updateThrowsErrorIfPokemonNotFound()
+    {
+        $response = $this->putJson('/api/pokemon/2374792884920394', [
+            'name' => 'Bulbasaaaaaaur'
+        ]);
+        $response
+            ->assertStatus(400);
+    }
+
+    /**
+     * update throws error if pokemon not found
+     * @test
+     * @return void
+     */
+    public function updateWorksAndStripsTags()
+    {
+        $response = $this->putJson('/api/pokemon/1', [
+            'name' => '<bold>Bulbasaaaaaaur</bold>'
+        ]);
+        $response
+            ->assertStatus(200);
+        $pokemon = Pokemon::find(1);
+
+        $this->assertEquals($pokemon->name, 'Bulbasaaaaaaur');
+        $pokemon->name = 'Bulbasaur';
+        $pokemon->save();
+    }
+
     // # same for update (200)
 }
