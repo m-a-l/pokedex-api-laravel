@@ -20,3 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/pokemons', 'PokemonController@index');
+Route::post('/pokemons/new', 'PokemonController@create');
+Route::delete('/pokemon/{id}', 'PokemonController@delete');
