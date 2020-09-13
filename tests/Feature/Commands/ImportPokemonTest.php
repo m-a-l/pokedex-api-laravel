@@ -6,7 +6,7 @@ use Tests\TestCase;
 use  Illuminate\Contracts\Filesystem\FileNotFoundException;
 use App\Console\Commands\ImportPokemon as ImportCommand;
 use Illuminate\Support\Collection;
-use App\Pokemon;
+use App\Models\Pokemon;
 use App\Services\CsvService;
 use  InvalidArgumentException;
 use Schema;

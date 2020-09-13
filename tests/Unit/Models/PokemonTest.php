@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
-use App\Pokemon;
+use App\Models\Pokemon;
 
 class PokemonTest extends TestCase
 {

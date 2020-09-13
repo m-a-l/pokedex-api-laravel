@@ -1,7 +1,9 @@
 # pokedex-api-laravel
 
 This is a little demo of an API allowing create, update, delete as well as a listing of pokemons.
-The database is populated via a csv. 
+The database is populated via a csv.
+
+[Postman documentation](https://documenter.getpostman.com/view/12628792/TVK75Ke8)
 
 ## Installation 
 Requires : 
@@ -37,11 +39,11 @@ The pokemon data can be reset by running `php artisan pokemon:import`. See file 
 - [x] make a csv class to read the csv and make it into a collection.
 - [x] create a Pokemon model, and the appropriate database migration
 - [x] create an import command from the csv to the pokemons table
-- [ ] create the PokemonController, with postman documentation
+- [x] create the PokemonController, with postman documentation
 ### Should have
 - [x] Heroku implementation
-- [ ] Commands, import : Bulk import instead of save in foreach
 - [x] Do not allow create of the same name
+- [ ] Commands, import : Bulk import instead of save in foreach
 - [ ] create an autentication method for the API (use passport)
 - [ ] remove register endpoint for even more security
 - [ ] tidy code : put models in a Models/ directory

@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Services\CsvService;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use App\Pokemon;
+use App\Models\Pokemon;
 use  InvalidArgumentException;
 use Storage;
 

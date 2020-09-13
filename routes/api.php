@@ -19,8 +19,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/register', 'PassportAuthController@register');
+Route::post('/login', 'PassportAuthController@login');
+
 Route::get('/pokemons', 'PokemonController@index');
 Route::get('/pokemon/{id}', 'PokemonController@read');
-Route::post('/pokemons/new', 'PokemonController@create');
-Route::delete('/pokemon/{id}', 'PokemonController@delete');
-Route::put('/pokemon/{id}', 'PokemonController@update');
+Route::middleware('auth:api')->group(function () {
+    Route::post('/pokemons/new', 'PokemonController@create');
+    Route::delete('/pokemon/{id}', 'PokemonController@delete');
+    Route::put('/pokemon/{id}', 'PokemonController@update');
+});

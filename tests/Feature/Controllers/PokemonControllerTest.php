@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Pokemon;
+use App\Models\Pokemon;
 
 class PokemonControllerTest extends TestCase
 {
