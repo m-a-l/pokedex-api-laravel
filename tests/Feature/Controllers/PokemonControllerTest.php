@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\Pokemon;
+use App\Models\User;
 
 class PokemonControllerTest extends TestCase
 {
@@ -30,7 +31,8 @@ class PokemonControllerTest extends TestCase
      */
     public function createThrowsErrorIfTypeIsNotValid()
     {
-        $response = $this->postJson('/api/pokemons/new', [
+        $user = User::find(1);
+        $response = $this->actingAs($user, 'api')->postJson('/api/pokemons/new', [
             'name' => 'Bulbasaur 2',
             'number' => 1,
             'type_1' => 'Grass',
@@ -61,7 +63,8 @@ class PokemonControllerTest extends TestCase
      */
     public function createThrowsErrorIfNameExists()
     {
-        $response = $this->postJson('/api/pokemons/new', [
+        $user = User::find(1);
+        $response = $this->actingAs($user, 'api')->postJson('/api/pokemons/new', [
             'name' => 'Bulbasaur',
             'number' => 1,
             'type_1' => 'Grass',
@@ -92,7 +95,8 @@ class PokemonControllerTest extends TestCase
      */
     public function createThrowsErrorsIfFieldAreMissing()
     {
-        $response = $this->postJson('/api/pokemons/new', [
+        $user = User::find(1);
+        $response = $this->actingAs($user, 'api')->postJson('/api/pokemons/new', [
             'number' => 49,
         ]);
         $response
@@ -147,7 +151,8 @@ class PokemonControllerTest extends TestCase
      */
     public function createThrowsErrorsIfTypesAreNotAccurate()
     {
-        $response = $this->postJson('/api/pokemons/new', [
+        $user = User::find(1);
+        $response = $this->actingAs($user, 'api')->postJson('/api/pokemons/new', [
             'name' => 'Bulbasaur',
             'number' => 1,
             'type_1' => 1,
@@ -203,8 +208,9 @@ class PokemonControllerTest extends TestCase
      */
     public function createReturns201AndAddsAPokemon()
     {
+        $user = User::find(1);
         $countBefore = Pokemon::count();
-        $response = $this->postJson('/api/pokemons/new', [
+        $response = $this->actingAs($user, 'api')->postJson('/api/pokemons/new', [
             'name' => '<bold>Bulbasaur 2</bold>',
             'number' => 1,
             'type_1' => 'Grass',
@@ -234,7 +240,8 @@ class PokemonControllerTest extends TestCase
      */
     public function deleteThrowsErrorIfIdDoesNotExist()
     {
-        $response = $this->delete("/api/pokemon/132940347348")
+        $user = User::find(1);
+        $response = $this->actingAs($user, 'api')->delete("/api/pokemon/132940347348")
             ->assertStatus(400);
     }
 
@@ -245,7 +252,8 @@ class PokemonControllerTest extends TestCase
      */
     public function deleteWorks()
     {
-        $response = $this->postJson('/api/pokemons/new', [
+        $user = User::find(1);
+        $response = $this->actingAs($user, 'api')->postJson('/api/pokemons/new', [
             'name' => 'Bulbasaur 2',
             'number' => 1,
             'type_1' => 'Grass',
@@ -275,7 +283,8 @@ class PokemonControllerTest extends TestCase
      */
     public function readReturnsGoodPokemon()
     {
-        $response = $this->get('/api/pokemon/1');
+        $user = User::find(1);
+        $response = $this->actingAs($user, 'api')->get('/api/pokemon/1');
 
         $response
             ->assertStatus(200)
@@ -303,7 +312,8 @@ class PokemonControllerTest extends TestCase
      */
     public function readThrowsErrorsIfPokemonNotFound()
     {
-        $response = $this->get('/api/pokemon/2378493845384509');
+        $user = User::find(1);
+        $response = $this->actingAs($user, 'api')->get('/api/pokemon/2378493845384509');
         $response
             ->assertStatus(400);
     }
@@ -315,7 +325,8 @@ class PokemonControllerTest extends TestCase
      */
     public function updateThrowsErrorIfPokemonNotFound()
     {
-        $response = $this->putJson('/api/pokemon/2374792884920394', [
+        $user = User::find(1);
+        $response = $this->actingAs($user, 'api')->putJson('/api/pokemon/2374792884920394', [
             'name' => 'Bulbasaaaaaaur'
         ]);
         $response
@@ -329,7 +340,8 @@ class PokemonControllerTest extends TestCase
      */
     public function updateWorksAndStripsTags()
     {
-        $response = $this->putJson('/api/pokemon/1', [
+        $user = User::find(1);
+        $response = $this->actingAs($user, 'api')->putJson('/api/pokemon/1', [
             'name' => '<bold>Bulbasaaaaaaur</bold>'
         ]);
         $response
