@@ -4,6 +4,7 @@ This is a little demo of an API allowing create, update, delete as well as a lis
 The database is populated via a csv.
 
 [Postman documentation](https://documenter.getpostman.com/view/12628792/TVK75Ke8)
+[Staging url](https://pure-stream-21702.herokuapp.com)
 
 ## Installation 
 Requires : 
@@ -30,6 +31,10 @@ php artisan serve
 ## Testing
 You can run tests via `php artisan test`. It is recommended to have a test driven approach to your development.
 
+## API 
+[Postman documentation](https://documenter.getpostman.com/view/12628792/TVK75Ke8)
+Some methods require an account. This can be created by the register method for now.
+
 ## Import
 
 The pokemon data can be reset by running `php artisan pokemon:import`. See file `app/Console/Commands/ImportPokemon.php`.
@@ -49,6 +54,7 @@ The pokemon data can be reset by running `php artisan pokemon:import`. See file 
 - [ ] Commands, import : Bulk import instead of save in foreach
 ### Nice to have
 - [ ] add a updated_by to the Pokemon class for more security
+- [ ] soft delete
 - [ ] Commands, import : make a separate command (or add option) that updates or create, and does not drop table pokemons
 - [ ] Commands, import : allow to use another csv than /storage/app/csv/pokemon.csv
 - [ ] Commands, import : make nice little user output
