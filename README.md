@@ -35,7 +35,7 @@ php artisan serve
 - Code Style follows [PSR-12](https://www.php-fig.org/psr/psr-12/)
 
 ## Testing
-You can run tests via `php artisan test`. It is recommended to have a test driven approach to your development.
+You can run tests via `php artisan test`. It is recommended to have a test driven approach to your development. You need at least one user in database.
 
 ## API 
 [Postman documentation](https://documenter.getpostman.com/view/12628792/TVK75Ke8)
