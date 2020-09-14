@@ -43,10 +43,10 @@ The pokemon data can be reset by running `php artisan pokemon:import`. See file 
 ### Should have
 - [x] Heroku implementation
 - [x] Do not allow create of the same name
-- [ ] Commands, import : Bulk import instead of save in foreach
-- [ ] create an autentication method for the API (use passport)
+- [x] create an autentication method for the API (use passport)
+- [x] tidy code : put models in a Models/ directory
 - [ ] remove register endpoint for even more security
-- [ ] tidy code : put models in a Models/ directory
+- [ ] Commands, import : Bulk import instead of save in foreach
 ### Nice to have
 - [ ] add a updated_by to the Pokemon class for more security
 - [ ] Commands, import : make a separate command (or add option) that updates or create, and does not drop table pokemons
