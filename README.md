@@ -21,6 +21,11 @@ php artisan key:generate
 # Migrate all the database
 php artisan migrate
 
+# Install passport (for authentication)
+# Note: this will generate key in your app/storage folder. You can also those keys in your .env like so:
+# PASSPORT_PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----\nMIIJJwIBAAKCAgEAw3KPag...\n-----END RSA PRIVATE KEY-----"
+# PASSPORT_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOC...\n-----END PUBLIC KEY-----\n"
+php artisan passport:install
 # launch a development server
 php artisan serve
 ```
