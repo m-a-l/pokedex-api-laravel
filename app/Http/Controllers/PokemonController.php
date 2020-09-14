@@ -17,8 +17,22 @@ class PokemonController extends Controller
         return Pokemon::orderBy('number')->paginate(20);
     }
 
+    public function read($id)
+    {
+        $pokemon = Pokemon::find($id);
+        if ($pokemon === null) {
+            return response('Pokemon does not exist', 400);
+        }
+
+        return response()
+            ->json($pokemon, 200);
+    }
+
     public function create(Request $request)
     {
+        if (!auth()->check()) {
+            return response('Unauthorised', 401);
+        }
         $types = implode(',', config('pokemon.types'));
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:pokemons|max:255',
@@ -38,8 +52,7 @@ class PokemonController extends Controller
         if ($validator->fails()) {
             $errors = $validator->errors();
 
-            return response()
-                ->json($errors, 400);
+            return response()->json($errors, 400);
         }
         $pokemon = $request->all();
         $pokemon['name'] = trim(strip_tags($pokemon['name']));
@@ -51,6 +64,9 @@ class PokemonController extends Controller
 
     public function delete($id)
     {
+        if (!auth()) {
+            return response('Unauthorised', 401);
+        }
         $pokemon = Pokemon::find($id);
         if ($pokemon === null) {
             return response('Pokemon does not exist', 400);
@@ -58,19 +74,11 @@ class PokemonController extends Controller
         $pokemon->delete();
     }
 
-    public function read($id)
-    {
-        $pokemon = Pokemon::find($id);
-        if ($pokemon === null) {
-            return response('Pokemon does not exist', 400);
-        }
-
-        return response()
-            ->json($pokemon, 200);
-    }
-
     public function update(Request $request, $id)
     {
+        if (!auth()) {
+            return response('Unauthorised', 401);
+        }
         $pokemon = Pokemon::find($id);
         if ($pokemon === null) {
             return response('Pokemon does not exist', 400);
@@ -94,8 +102,7 @@ class PokemonController extends Controller
         if ($validator->fails()) {
             $errors = $validator->errors();
 
-            return response()
-                ->json($errors, 400);
+            return response()->json($errors, 400);
         }
 
         foreach ($request->all() as $attribute => $value) {
@@ -103,7 +110,6 @@ class PokemonController extends Controller
         }
         $pokemon->save();
 
-        return response()
-            ->json($pokemon, 200);
+        return response()->json($pokemon, 200);
     }
 }
